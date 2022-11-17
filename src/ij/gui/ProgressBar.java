@@ -33,9 +33,9 @@ public class ProgressBar extends Canvas {
      * This constructor is called once by ImageJ at startup.
      */
     public ProgressBar(int canvasWidth, int canvasHeight) {
-    	init(canvasWidth, canvasHeight);
-	}
-    
+        init(canvasWidth, canvasHeight);
+    }
+
     public void init(int canvasWidth, int canvasHeight) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -57,13 +57,15 @@ public class ProgressBar extends Canvas {
     }
 
     /**
-     * Updates the progress bar, where abs(progress) should run from 0 to 1.
-     * If abs(<code>progress</code>) == 1 the bar is erased. The bar is updated only
-     * if more than 90 ms have passed since the last call. Does nothing if the
-     * ImageJ window is not present.
-     * @param progress Length of the progress bar to display (0...1). 
-     * Using <code>progress</code> with negative sign (0 .. -1) will regard subsequent calls with
-     * positive argument as sub-ordinate processes that are displayed as moving dot.
+     * Updates the progress bar, where abs(progress) should run from 0 to 1. If
+     * abs(<code>progress</code>) == 1 the bar is erased. The bar is updated
+     * only if more than 90 ms have passed since the last call. Does nothing if
+     * the ImageJ window is not present.
+     *
+     * @param progress Length of the progress bar to display (0...1). Using
+     * <code>progress</code> with negative sign (0 .. -1) will regard subsequent
+     * calls with positive argument as sub-ordinate processes that are displayed
+     * as moving dot.
      */
     public void show(double progress) {
         show(progress, false);
@@ -71,27 +73,33 @@ public class ProgressBar extends Canvas {
 
     /**
      * Updates the progress bar, where abs(progress) should run from 0 to 1.
-     * @param progress Length of the progress bar to display (0...1). 
+     *
+     * @param progress Length of the progress bar to display (0...1).
      * @param showInBatchMode show progress bar in batch mode macros?
      */
     public void show(double progress, boolean showInBatchMode) {
         boolean finished = false;
-        if (progress<=-1)
+        if (progress <= -1) {
             finished = true;
-        if (!dualDisplay && progress >= 1)
+        }
+        if (!dualDisplay && progress >= 1) {
             finished = true;
+        }
         if (!finished) {
             if (progress < 0) {
                 slowX = -progress;
                 fastX = 0.0;
                 dualDisplay = true;
-            } else if (dualDisplay)
+            } else if (dualDisplay) {
                 fastX = progress;
-            if (!dualDisplay)
+            }
+            if (!dualDisplay) {
                 slowX = progress;
+            }
         }
-        if (!showInBatchMode && (batchMode || Interpreter.isBatchMode()))
+        if (!showInBatchMode && (batchMode || Interpreter.isBatchMode())) {
             return;
+        }
         if (finished) {//clear the progress bar
             slowX = 0.0;
             fastX = 0.0;
@@ -101,8 +109,9 @@ public class ProgressBar extends Canvas {
             return;
         }
         long time = System.currentTimeMillis();
-        if (time-lastTime<90 && progress!=1.0)
+        if (time - lastTime < 90 && progress != 1.0) {
             return;
+        }
         lastTime = time;
         showBar = true;
         repaint();
@@ -113,15 +122,18 @@ public class ProgressBar extends Canvas {
      * (<code>(abs(currentIndex)+1)/abs(finalIndex)</code> of the maximum bar
      * length. Use a negative <code>currentIndex</code> to show subsequent
      * plugin calls as moving dot. The bar is erased if
-     * <code>currentIndex&gt;=finalIndex-1</code> or <code>finalIndex == 0</code>.
+     * <code>currentIndex&gt;=finalIndex-1</code> or
+     * <code>finalIndex == 0</code>.
      */
     public void show(int currentIndex, int finalIndex) {
         boolean wasNegative = currentIndex < 0;
         double progress = ((double) Math.abs(currentIndex) + 1.0) / Math.abs(finalIndex);
-        if (wasNegative)
+        if (wasNegative) {
             progress = -progress;
-        if (finalIndex == 0)
+        }
+        if (finalIndex == 0) {
             progress = -1;
+        }
         show(progress);
     }
 
@@ -141,16 +153,18 @@ public class ProgressBar extends Canvas {
 
     void drawBar(Graphics g) {
         int barEnd = (int) (width * slowX);
-        if (Toolbar.getToolId()==Toolbar.ANGLE)
-			g.setColor(Color.getHSBColor(((float)(System.currentTimeMillis()%1000))/1000, 0.5f, 1.0f));
-		else
-       		g.setColor(barColor);
+        if (Toolbar.getToolId() == Toolbar.ANGLE) {
+            g.setColor(Color.getHSBColor(((float) (System.currentTimeMillis() % 1000)) / 1000, 0.5f, 1.0f));
+        } else {
+            g.setColor(barColor);
+        }
         g.fillRect(x, y, barEnd, height);
         if (dualDisplay && fastX > 0) {
             int dotPos = (int) (width * fastX);
             g.setColor(Color.BLACK);
-            if (dotPos > 1 && dotPos < width - 7)
+            if (dotPos > 1 && dotPos < width - 7) {
                 g.fillOval(dotPos, y + 3, 7, 7);
+            }
         }
     }
 
