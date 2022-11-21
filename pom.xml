@@ -3,6 +3,7 @@
     <groupId>ImageJ</groupId>
     <artifactId>ImageJ</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+<<<<<<< HEAD
     <build>
         <sourceDirectory>src</sourceDirectory>
         <resources>
@@ -30,3 +31,61 @@
         </plugins>
     </build>
 </project>
+=======
+    
+    <properties>
+      <sonar.organization>ojimenezm</sonar.organization>
+      <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+      <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml
+      </sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
+    
+      <build>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.9.1.2184</version>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.6</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <phase>test-compile</phase>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+>>>>>>> 0440009c1ca9b33f91484ac77aea386033bdffa0
