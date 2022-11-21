@@ -2,12 +2,9 @@ package ij.plugin;
 
 import ij.*;
 import ij.process.*;
-import ij.gui.*;
-import java.awt.*;
 import ij.io.SaveDialog;
 import java.io.*;
-import java.util.*;
-import java.awt.image.*;
+
 
 /*
  This plugin saves grayscale images in PGM (portable graymap) format 

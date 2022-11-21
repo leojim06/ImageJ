@@ -6,8 +6,6 @@ import java.awt.event.*;
 import ij.*;
 import ij.gui.*;
 import ij.macro.*;
-import ij.text.*;
-import ij.util.Tools;
 import ij.io.*;
 import ij.macro.MacroConstants;
 import ij.plugin.frame.*;
@@ -27,10 +25,8 @@ public class MacroInstaller implements PlugIn, MacroConstants, ActionListener {
 
     private ArrayList<String> macroNames = new ArrayList();
     private ArrayList<Integer> macroStarts = new ArrayList();
-    private MenuBar mb = new MenuBar();
     private int nMacros;
     private Program pgm;
-    private boolean firstEvent = true;
     private String shortcutsInUse;
     private int inUseCount;
     private int nShortcuts;
